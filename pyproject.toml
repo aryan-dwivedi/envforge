@@ -1,0 +1,52 @@
+[project]
+name = "envforge"
+dynamic = ["version"]
+description = "Validation-first compiler for RL environments and evals for language models"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.11"
+dependencies = [
+    "pydantic>=2.7",
+    "openai>=2.7.2",
+    "datasketch>=2.0,<3",
+    "numpy>=1.26",
+    "typer>=0.12",
+]
+
+[project.optional-dependencies]
+openenv = ["openenv-core>=0.3,<0.4"]
+
+[project.scripts]
+envforge = "envforge.cli:app"
+
+[dependency-groups]
+dev = [
+    "pytest>=8",
+    "ruff",
+    "openenv-core>=0.3,<0.4",
+    "httpx",
+    "uvicorn",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.version]
+path = "src/envforge/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/envforge"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["docker: requires docker CLI"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+extend-exclude = ["tests/fixtures"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]

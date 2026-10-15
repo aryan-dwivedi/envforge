@@ -1,0 +1,60 @@
+# envforge configuration. Copy to envforge.toml (gitignored) and fill in the
+# roles. Every key is required unless marked optional. API keys are read from
+# the environment variable named by `api_key_env`, never from this file.
+
+store_dir = "store"
+
+[sandbox]
+backend = "process"          # "process" (dev only, no network isolation) | "docker"
+image = "python:3.13-slim"   # docker only
+cpu = 1.0
+memory_mb = 1024
+pids = 256
+
+[limits]
+call_timeout_s = 5.0
+
+[run]
+llm_concurrency = 8
+max_repairs = 3
+
+[roles.builder]
+base_url = "https://api.openai.com/v1"
+model = "builder-model"
+api_key_env = "OPENAI_API_KEY"
+temperature = 0.7            # optional, default 0.7
+max_tokens = 8000            # optional, default 8000
+price_in_per_mtok = 0.0      # optional, default 0.0
+price_out_per_mtok = 0.0     # optional, default 0.0
+
+# [roles.repairer]           # optional; absent => copy of builder
+
+[roles.independent_solver]   # must use a different model than builder/repairer
+base_url = "https://llm.example.com/v1"
+model = "solver-model"
+api_key_env = "SOLVER_API_KEY"
+
+[[roles.panel]]              # >=2 entries from >=2 model families
+base_url = "https://api.openai.com/v1"
+model = "panel-model-a"
+api_key_env = "OPENAI_API_KEY"
+family = "family-a"
+
+[[roles.panel]]
+base_url = "https://llm.example.com/v1"
+model = "panel-model-b"
+api_key_env = "SOLVER_API_KEY"
+family = "family-b"
+
+[roles.policy]               # the small model being trained
+base_url = "http://127.0.0.1:8001/v1"
+model = "policy-model"
+api_key_env = "POLICY_API_KEY"
+
+[roles.embedder]             # base_url, model, api_key_env only
+base_url = "https://api.openai.com/v1"
+model = "embedding-model"
+api_key_env = "OPENAI_API_KEY"
+
+[contamination]
+suites = []                  # list of {name, path, field}; path is JSONL; field is the text key

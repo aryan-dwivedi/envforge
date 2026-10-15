@@ -1,0 +1,31 @@
+# Python and uv
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# envforge run output and local config (endpoints, key env names)
+store/
+envforge.toml
+
+# Local secrets. `.env.example` files stay committable.
+.env
+.env.*
+!.env.example
+
+# Local omp agent tooling directory (not part of the project)
+.omp/
+
+# Private clean-for-public overlay (sensitive-literal denylist; never published).
+.private/
+
+# OS and editor noise
+.DS_Store
+.idea/
+.vscode/

@@ -1,0 +1,62 @@
+name: Release
+
+# Publishes a GitHub release on a version tag. The tag is pushed by hand after
+# the release commit is green on main (see RELEASE.md).
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10.3.0
+        with:
+          python-version: "3.13"
+      - run: uv sync --locked
+
+      - name: Tag equals the package version
+        id: version
+        run: |
+          set -uo pipefail
+          V="$(uv run python -c 'import envforge; print(envforge.__version__)')"
+          if [ "v$V" != "$GITHUB_REF_NAME" ]; then
+            echo "FAIL: tag $GITHUB_REF_NAME does not match src/envforge/__init__.py version $V."
+            exit 1
+          fi
+          echo "version=$V" >> "$GITHUB_OUTPUT"
+
+      - name: Checks
+        run: |
+          uv run ruff check .
+          uv run pytest -q
+          bash scripts/clean-for-public.sh
+          python3 scripts/check-changelog-order.py
+
+      - name: Release notes from CHANGELOG.md
+        env:
+          V: ${{ steps.version.outputs.version }}
+        run: |
+          set -uo pipefail
+          awk -v v="$V" '
+            index($0, "## [" v "]") == 1 { on = 1; next }
+            on && /^## / { exit }
+            on { print }
+          ' CHANGELOG.md > "$RUNNER_TEMP/notes.md"
+          if ! grep -q '[^[:space:]]' "$RUNNER_TEMP/notes.md"; then
+            echo "FAIL: CHANGELOG.md has no non-empty section for [$V]."
+            exit 1
+          fi
+
+      - run: uv build
+
+      - name: Publish the GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          V: ${{ steps.version.outputs.version }}
+        run: gh release create "$GITHUB_REF_NAME" dist/* --title "$V" --notes-file "$RUNNER_TEMP/notes.md" --verify-tag

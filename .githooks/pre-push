@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+# Run the repository guards before anything leaves this machine. This is where
+# the named half of the clean-for-public sweep runs, because the private
+# denylist exists only here. Enable once per clone:
+#   git config core.hooksPath .githooks
+set -uo pipefail
+
+root="$(git rev-parse --show-toplevel)"
+cd "$root" || exit 2
+zero="0000000000000000000000000000000000000000"
+fail=0
+
+while read -r _local_ref local_sha _remote_ref remote_sha; do
+  [ "$local_sha" = "$zero" ] && continue  # branch deletion
+  if [ "$remote_sha" = "$zero" ]; then
+    bash scripts/check-commit-trailers.sh "$local_sha" --not --remotes || fail=1
+  else
+    bash scripts/check-commit-trailers.sh "$remote_sha..$local_sha" || fail=1
+  fi
+done
+
+# Maintainers opt in once per clone so a push without the private denylist is
+# refused instead of passing on structural patterns alone:
+#   git config envforge.requireDenylist true
+required=0
+[ "$(git config --bool envforge.requireDenylist)" = "true" ] && required=1
+ENVFORGE_DENYLIST_REQUIRED=$required bash scripts/clean-for-public.sh || fail=1
+python3 scripts/check-changelog-order.py || fail=1
+python3 scripts/check-file-size.py || fail=1
+
+if [ "$fail" -ne 0 ]; then
+  echo "pre-push: guards failed; nothing was pushed."
+fi
+exit "$fail"

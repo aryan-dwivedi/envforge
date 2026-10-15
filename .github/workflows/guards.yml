@@ -1,0 +1,114 @@
+name: Guards
+
+# Repository guards that are not tests and not lint: they assert properties of
+# the tree and of the commits. The checks live in scripts/ so the same code
+# runs here, in the local hooks, and by hand.
+#
+# A guard that cannot fail is worse than no guard, because it is read as proof.
+# Every job therefore runs a self-test that plants a known-positive sample and
+# asserts the matcher fires on it before the real check is trusted.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  leak-guard:
+    name: Tree and commit hygiene
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          # The commit-message scan needs the range, so shallow will not do.
+          fetch-depth: 0
+
+      - name: Private and local-only paths are not tracked
+        run: |
+          set -uo pipefail
+          # Checked by path, so no private vocabulary has to appear in this
+          # public file to express it.
+          if git ls-files | grep -E '(^|/)(\.omp|\.private)/|(^|/)envforge\.toml$|(^|/)\.env(\.[^/]*)?$' | grep -vE '(^|/)\.env\.example$'; then
+            echo "FAIL: a gitignored local-only file is tracked (see above)."
+            exit 1
+          fi
+          echo "PASS: no local-only path is tracked."
+
+      - name: Clean-for-public sweep self-test
+        run: bash scripts/clean-for-public.sh --self-test
+
+      - name: Clean-for-public sweep (structural half)
+        # The named half reads a private denylist that is never committed and
+        # never uploaded as a secret; it runs in the local pre-push hook. The
+        # sweep says so in its output instead of printing a full pass.
+        run: bash scripts/clean-for-public.sh
+
+      - name: Commit-trailer check self-test
+        run: bash scripts/check-commit-trailers.sh --self-test
+
+      - name: Commit messages in this range carry no AI co-author trailer
+        env:
+          BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          set -uo pipefail
+          if [ -n "$BASE" ] && git cat-file -e "$BASE^{commit}" 2>/dev/null; then
+            bash scripts/check-commit-trailers.sh "$BASE..HEAD"
+          else
+            # A new branch or a force-push has no usable base. Fall back to
+            # everything not already on another remote branch rather than
+            # silently checking nothing.
+            bash scripts/check-commit-trailers.sh HEAD --not --remotes=origin
+          fi
+
+  changelog-order:
+    name: CHANGELOG is newest-first
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Check catches a planted out-of-order entry
+        run: |
+          set -uo pipefail
+          sample="$RUNNER_TEMP/CHANGELOG.md"
+          printf '# Changelog\n\n## [Unreleased]\n\n## [0.1.0] - 2026-01-01\n\n## [0.2.0] - 2026-02-01\n' > "$sample"
+          rc=0; python3 scripts/check-changelog-order.py "$sample" || rc=$?
+          if [ "$rc" -ne 1 ]; then echo "SELF-TEST FAILED: an ascending changelog exited $rc, expected 1"; exit 1; fi
+
+      - name: Version headings decrease, top to bottom
+        run: python3 scripts/check-changelog-order.py
+
+  file-size:
+    name: Source files stay within the size ratchet
+    runs-on: ubuntu-latest
+    steps:
+      # Every .py under src/, tests/ and scripts/ is held to 500 lines; the
+      # files already past it are listed in .file-size-baseline and may shrink
+      # but never grow.
+      - uses: actions/checkout@v7
+
+      - name: Check catches a planted growth and a planted oversize file
+        run: |
+          set -uo pipefail
+          fail=0
+          grown="$(grep -v '^#' .file-size-baseline | grep . | head -n1 | cut -d' ' -f2- || true)"
+          if [ -n "$grown" ]; then
+            cp "$grown" "$RUNNER_TEMP/grown.py"
+            { echo '# planted'; cat "$RUNNER_TEMP/grown.py"; } > "$grown"
+            rc=0; python3 scripts/check-file-size.py || rc=$?
+            cp "$RUNNER_TEMP/grown.py" "$grown"
+            if [ "$rc" -ne 1 ]; then echo "SELF-TEST FAILED: growth of $grown exited $rc, expected 1"; fail=1; fi
+          fi
+          mkdir -p src
+          planted=src/planted_oversize.py
+          seq 1 501 | sed 's/^/# /' > "$planted"
+          rc=0; python3 scripts/check-file-size.py || rc=$?
+          rm -f "$planted"
+          if [ "$rc" -ne 1 ]; then echo "SELF-TEST FAILED: a new 501-line file exited $rc, expected 1"; fail=1; fi
+          exit "$fail"
+
+      - name: Source sizes are within the ratchet
+        run: python3 scripts/check-file-size.py

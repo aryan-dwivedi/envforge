@@ -1,0 +1,481 @@
+# Built-in seeds for the procedural environment family.
+
+[[seed]]
+id = "modular-sum"
+title = "Modular sum"
+description = "Compute the sum of a list of integers modulo a given modulus."
+tags = ["number-theory"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "gcd-lcm"
+title = "GCD and LCM"
+description = "Compute the greatest common divisor or least common multiple of a set of integers."
+tags = ["number-theory"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "prime-factor-count"
+title = "Prime factor count"
+description = "Count the prime factors of an integer, with multiplicity."
+tags = ["number-theory"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "base-conversion"
+title = "Base conversion"
+description = "Convert an integer written in one positional base into another base."
+tags = ["number-theory", "strings"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "fraction-simplify"
+title = "Fraction simplification"
+description = "Reduce an arithmetic expression over fractions to a fraction in lowest terms."
+tags = ["number-theory", "algebra"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "integer-linear-equation"
+title = "Integer linear equation"
+description = "Solve a linear equation in one variable whose solution is an integer."
+tags = ["algebra"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "linear-system-2x2"
+title = "Linear system 2x2"
+description = "Solve a system of two linear equations in two unknowns with rational solutions."
+tags = ["algebra"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "polynomial-eval-mod"
+title = "Polynomial evaluation modulo m"
+description = "Evaluate an integer polynomial at a point modulo a given modulus."
+tags = ["algebra", "number-theory"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "int-matrix-determinant"
+title = "Integer matrix determinant"
+description = "Compute the determinant of a small square matrix with integer entries."
+tags = ["algebra"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "binomial-mod-prime"
+title = "Binomial coefficient modulo a prime"
+description = "Compute a binomial coefficient modulo a given prime."
+tags = ["combinatorics", "number-theory"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "digit-sum-range"
+title = "Digit sum over a range"
+description = "Compute the total of the decimal digit sums of all integers in a range."
+tags = ["number-theory"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "collatz-steps"
+title = "Collatz steps"
+description = "Count the Collatz steps an integer takes to reach 1."
+tags = ["number-theory", "simulation"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "fibonacci-mod"
+title = "Fibonacci modulo m"
+description = "Compute the n-th Fibonacci number modulo a given modulus."
+tags = ["number-theory", "dp"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "graph-shortest-path"
+title = "Graph shortest path"
+description = "Find the length of the shortest weighted path between two vertices of a graph."
+tags = ["graphs"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "connected-components"
+title = "Connected components"
+description = "Count the connected components of an undirected graph."
+tags = ["graphs"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "dag-longest-path"
+title = "DAG longest path"
+description = "Find the length of the longest weighted path in a directed acyclic graph."
+tags = ["graphs", "dp"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "mst-weight"
+title = "Minimum spanning tree weight"
+description = "Compute the total weight of a minimum spanning tree of a weighted undirected graph."
+tags = ["graphs"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "bipartite-check"
+title = "Bipartite check"
+description = "Decide whether an undirected graph is bipartite."
+tags = ["graphs", "logic"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "max-flow-small"
+title = "Small maximum flow"
+description = "Compute the maximum flow between two vertices of a small capacitated network."
+tags = ["graphs"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "interval-scheduling-max"
+title = "Maximum interval scheduling"
+description = "Find the largest number of pairwise non-overlapping intervals from a list."
+tags = ["greedy", "scheduling"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "knapsack-01"
+title = "0/1 knapsack"
+description = "Find the maximum total value of items that fit within a knapsack capacity, each item used at most once."
+tags = ["dp"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "coin-change-ways"
+title = "Coin change ways"
+description = "Count the ways to make an amount from unlimited coins of given denominations."
+tags = ["dp", "combinatorics"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "longest-increasing-subsequence"
+title = "Longest increasing subsequence"
+description = "Find the length of the longest strictly increasing subsequence of a sequence."
+tags = ["dp"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "edit-distance"
+title = "Edit distance"
+description = "Compute the minimum number of insertions, deletions and substitutions that turn one string into another."
+tags = ["dp", "strings"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "longest-common-subsequence"
+title = "Longest common subsequence"
+description = "Find the length of the longest common subsequence of two strings."
+tags = ["dp", "strings"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "subset-sum-count"
+title = "Subset sum count"
+description = "Count the subsets of a list of integers that sum to a target."
+tags = ["dp", "combinatorics"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "partition-equal-subset"
+title = "Equal subset partition"
+description = "Decide whether a multiset of integers can be split into two subsets of equal sum."
+tags = ["dp", "logic"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "n-queens-count"
+title = "N-queens count"
+description = "Count the placements of n non-attacking queens on an n by n board."
+tags = ["combinatorics", "search"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "grid-paths-obstacles"
+title = "Grid paths with obstacles"
+description = "Count the monotone lattice paths across a grid that avoid blocked cells."
+tags = ["dp", "combinatorics"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "maze-shortest-path"
+title = "Maze shortest path"
+description = "Find the length of the shortest path between two cells of a grid maze."
+tags = ["graphs", "search"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "word-ladder-length"
+title = "Word ladder length"
+description = "Find the length of the shortest single-letter transformation sequence between two words within a word list."
+tags = ["graphs", "strings"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "palindromic-substring-count"
+title = "Palindromic substring count"
+description = "Count the palindromic substrings of a string."
+tags = ["strings"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "min-rotation-string"
+title = "Minimum string rotation"
+description = "Find the lexicographically smallest rotation of a string."
+tags = ["strings"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "run-length-decode-length"
+title = "Run-length decoded length"
+description = "Compute the length of the string obtained by decoding a run-length encoded string."
+tags = ["strings"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "bracket-min-insertions"
+title = "Minimum bracket insertions"
+description = "Find the minimum number of brackets to insert so that a bracket string becomes balanced."
+tags = ["strings", "greedy"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "roman-numeral-convert"
+title = "Roman numeral conversion"
+description = "Convert between Roman numerals and decimal integers."
+tags = ["strings", "number-theory"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "day-of-week"
+title = "Day of week"
+description = "Determine the day of the week for a given calendar date."
+tags = ["dates"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "timezone-arithmetic"
+title = "Time zone arithmetic"
+description = "Compute the local time in one fixed-offset time zone from a time given in another."
+tags = ["dates"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "unit-conversion-chain"
+title = "Unit conversion chain"
+description = "Convert a quantity through a chain of unit conversion factors."
+tags = ["arithmetic"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "loan-amortization-integer"
+title = "Integer loan amortization"
+description = "Compute the remaining balance of a loan after a number of payments using integer cent arithmetic."
+tags = ["arithmetic", "simulation"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "knights-and-knaves"
+title = "Knights and knaves"
+description = "Determine which speakers are knights and which are knaves from their statements."
+tags = ["logic"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "sat-count-small"
+title = "Small SAT model count"
+description = "Count the satisfying assignments of a small boolean formula in conjunctive normal form."
+tags = ["logic", "combinatorics"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "cellular-automaton-step"
+title = "Cellular automaton steps"
+description = "Compute the state of an elementary cellular automaton after a number of steps."
+tags = ["simulation"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "nim-winner"
+title = "Nim winner"
+description = "Determine whether the first player wins a Nim position under optimal play."
+tags = ["games", "logic"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "hanoi-kth-move"
+title = "Tower of Hanoi k-th move"
+description = "Determine the k-th move of the optimal Tower of Hanoi solution."
+tags = ["combinatorics", "simulation"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "permutation-rank"
+title = "Permutation rank"
+description = "Compute the lexicographic rank of a permutation."
+tags = ["combinatorics"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "combination-unrank"
+title = "Combination unranking"
+description = "Find the combination at a given lexicographic rank among all k-subsets of n items."
+tags = ["combinatorics"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "inversion-count"
+title = "Inversion count"
+description = "Count the inversions in a sequence of integers."
+tags = ["combinatorics", "sorting"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "grid-max-path-sum"
+title = "Grid maximum path sum"
+description = "Find the maximum sum of a monotone path from the top-left to the bottom-right of a number grid."
+tags = ["dp"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "set-cover-min-small"
+title = "Small minimum set cover"
+description = "Find the fewest subsets from a small family whose union covers the universe."
+tags = ["combinatorics", "search"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "makespan-identical-machines"
+title = "Makespan on identical machines"
+description = "Find the minimum makespan for assigning jobs to identical machines."
+tags = ["scheduling", "search"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "bubble-sort-swaps"
+title = "Bubble sort swaps"
+description = "Count the swaps bubble sort performs on a sequence."
+tags = ["sorting", "simulation"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "stack-machine-eval"
+title = "Stack machine evaluation"
+description = "Compute the final top of stack after running a program on a simple stack machine."
+tags = ["simulation"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "regex-match-count"
+title = "Regular expression match count"
+description = "Count the strings in a list that fully match a simple regular expression."
+tags = ["strings"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "vigenere-decode"
+title = "Vigenere decoding"
+description = "Decode a Vigenere-enciphered message given the key."
+tags = ["strings"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "queue-simulation-wait"
+title = "Queue simulation waiting time"
+description = "Compute the total customer waiting time in a single-server queue simulation."
+tags = ["simulation"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "dice-sum-probability"
+title = "Dice sum probability"
+description = "Compute the exact probability that a roll of several dice sums to a target."
+tags = ["probability"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "expected-value-rational"
+title = "Rational expected value"
+description = "Compute the exact expected value of a discrete random variable as a reduced fraction."
+tags = ["probability"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "lattice-points-in-polygon"
+title = "Lattice points in polygon"
+description = "Count the integer lattice points inside a simple polygon with integer vertices."
+tags = ["geometry"]
+license = "CC0-1.0"
+source = "envforge-builtin"
+
+[[seed]]
+id = "shoelace-area"
+title = "Shoelace area"
+description = "Compute the area of a simple polygon from its vertices with the shoelace formula."
+tags = ["geometry"]
+license = "CC0-1.0"
+source = "envforge-builtin"

@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Lint, test, build (Python ${{ matrix.python }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # The declared floor and the newest supported interpreter.
+        python: ["3.11", "3.13"]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10.3.0
+        with:
+          python-version: ${{ matrix.python }}
+          enable-cache: true
+      - name: Install
+        run: uv sync --locked
+      - name: Lint
+        run: uv run ruff check .
+      - name: Test
+        # Docker-marked tests skip themselves when the docker CLI is absent;
+        # the hosted runner has it, so they run here.
+        run: uv run pytest -q
+      - name: No-LLM validate smoke
+        run: uv run envforge validate tests/fixtures/modsum_good.py --solver tests/fixtures/modsum_solver.py
+      - name: Build
+        run: uv build
