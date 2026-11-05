@@ -22,7 +22,7 @@ envforge = "envforge.cli:app"
 
 [dependency-groups]
 dev = [
-    "pytest>=8",
+    "pytest>=9.2.0",
     "ruff",
     "openenv-core>=0.3,<0.4",
     "httpx",
